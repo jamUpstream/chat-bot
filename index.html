@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio Support Bot</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Demo page background -->
+  <div class="demo-bg">
+    <h1>My Portfolio</h1>
+    <p>Welcome! Click the chat button in the bottom-right corner to talk with my assistant.</p>
+  </div>
+
+  <!-- ── SUPPORT BOT WIDGET ── -->
+  <div id="chat-widget">
+
+    <!-- Collapsed state: circular trigger button -->
+    <button id="chat-toggle" aria-label="Open support chat">
+      <!-- Chat icon (open state) -->
+      <svg id="icon-open" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+      </svg>
+      <!-- Close icon (panel open state) -->
+      <svg id="icon-close" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+        stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+        style="display:none">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+
+    <!-- Expanded state: chat panel -->
+    <div id="chat-panel" aria-hidden="true">
+
+      <!-- Header -->
+      <div id="chat-header">
+        <div id="chat-avatar">J</div>
+        <div id="chat-header-info">
+          <span id="chat-name">Jam's Assistant</span>
+          <span id="chat-status">
+            <span class="status-dot"></span> Online
+          </span>
+        </div>
+      </div>
+
+      <!-- Message area -->
+      <div id="chat-messages" role="log" aria-live="polite"></div>
+
+      <!-- Typing indicator (hidden by default) -->
+      <div id="typing-indicator" style="display:none">
+        <span></span><span></span><span></span>
+      </div>
+
+      <!-- Input area -->
+      <div id="chat-input-area">
+        <input
+          type="text"
+          id="chat-input"
+          placeholder="Ask me anything…"
+          autocomplete="off"
+          aria-label="Type your message"
+        />
+        <button id="send-btn" aria-label="Send message">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+          </svg>
+        </button>
+      </div>
+
+    </div>
+  </div>
+  <!-- ── END SUPPORT BOT WIDGET ── -->
+
+  <script src="script.js"></script>
+</body>
+</html>
