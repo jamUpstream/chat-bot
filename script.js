@@ -222,7 +222,7 @@ async function getGroqReply(userMessage) {
     model: GROQ_MODEL,
     messages: conversationHistory,
     temperature: 0.7,
-    max_tokens: 512,
+    max_tokens: 1024,
     stream: false,
   };
 
