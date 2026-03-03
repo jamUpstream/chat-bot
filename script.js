@@ -189,19 +189,21 @@ BEHAVIOUR RULES:
 
 FORMATTING RULES (strictly follow these):
 - Never use markdown bold (**text**) or italic (*text*) in your replies.
-- Never wrap text in asterisks for any reason.
+- Never wrap text in asterisks or underscores for any reason.
+- Never place a URL on the same line as a description. Always put the URL on its own separate line below.
 - Use plain numbered lists (1. 2. 3.) or plain bullet lists (- item) with no extra symbols.
 - Keep list items as plain text only — no bold labels, no asterisks, no markdown decoration.
-- URLs must always appear on their own separate line, below the item description. Never place a URL on the same line as text. Never wrap URLs in underscores, asterisks, brackets, or any other characters. Just the raw URL on its own line.
+- URLs must always be on their own line. Never wrap them in underscores like __url__ or any other characters.
 
-EXAMPLE OF CORRECT LIST FORMAT:
+EXAMPLE OF CORRECT FORMAT (follow this exactly):
 1. Bark of Survival v1 - Wave-based survival game with upgrades and bosses.
 https://bark-of-survival-v1.vercel.app/
 
 2. freeworm.io - Real-time worm-style browser game.
 https://freeworm-io.vercel.app/
 
-Never format it like: "Bark of Survival v1 __https://...__ " — that is incorrect.
+EXAMPLE OF INCORRECT FORMAT (never do this):
+1. Bark of Survival v1 - Wave-based survival game __https://bark-of-survival-v1.vercel.app/__
 `.trim();
 
 /* ── 3. CONVERSATION MEMORY ─────────────────────────────────────────────── */
@@ -258,16 +260,37 @@ const iconClose = document.getElementById("icon-close");
 
 /* ── 6. UI HELPERS ───────────────────────────────────────────────────────── */
 
+function cleanBotText(text) {
+  return text
+    // Remove __url__ underscore wrapping (e.g. __https://...__)
+    .replace(/__(https?:\/\/[^\s_]+)__/g, "\n$1")
+    // Remove any remaining underscores wrapping around URLs
+    .replace(/_(https?:\/\/[^\s_]+)_/g, "\n$1")
+    // Remove **bold** markdown
+    .replace(/\*\*(.*?)\*\*/g, "$1")
+    // Remove *italic* markdown
+    .replace(/\*(.*?)\*/g, "$1")
+    // If a URL is still inline (not already on its own line), push it to the next line
+    .replace(/([^\n])(https?:\/\/)/g, "$1\n$2")
+    // Collapse more than 2 consecutive newlines into 2
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
+}
+
 function appendMessage(text, role) {
   const bubble = document.createElement("div");
   bubble.classList.add("msg", role);
 
+  const cleaned = role === "bot" ? cleanBotText(text) : text;
+
   // Auto-linkify URLs so the bot's links are clickable in the chat bubble
-  const linkedText = text.replace(
+  const linkedText = cleaned.replace(
     /(https?:\/\/[^\s)]+)/g,
     '<a href="$1" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;word-break:break-all;">$1</a>'
   );
-  bubble.innerHTML = linkedText;
+
+  // Preserve newlines as <br> tags so URLs render on their own line
+  bubble.innerHTML = linkedText.replace(/\n/g, "<br>");
 
   chatMessages.appendChild(bubble);
   chatMessages.scrollTop = chatMessages.scrollHeight;
