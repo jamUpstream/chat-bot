@@ -192,7 +192,16 @@ FORMATTING RULES (strictly follow these):
 - Never wrap text in asterisks for any reason.
 - Use plain numbered lists (1. 2. 3.) or plain bullet lists (- item) with no extra symbols.
 - Keep list items as plain text only — no bold labels, no asterisks, no markdown decoration.
-- URLs should appear as plain text on their own line after the relevant item.
+- URLs must always appear on their own separate line, below the item description. Never place a URL on the same line as text. Never wrap URLs in underscores, asterisks, brackets, or any other characters. Just the raw URL on its own line.
+
+EXAMPLE OF CORRECT LIST FORMAT:
+1. Bark of Survival v1 - Wave-based survival game with upgrades and bosses.
+https://bark-of-survival-v1.vercel.app/
+
+2. freeworm.io - Real-time worm-style browser game.
+https://freeworm-io.vercel.app/
+
+Never format it like: "Bark of Survival v1 __https://...__ " — that is incorrect.
 `.trim();
 
 /* ── 3. CONVERSATION MEMORY ─────────────────────────────────────────────── */
